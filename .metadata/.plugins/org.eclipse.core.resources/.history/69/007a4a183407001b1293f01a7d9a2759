@@ -1,0 +1,20 @@
+package org.ip.sesion01;
+
+public class Circunferencia {
+
+	public static void main(String[] args) {
+
+		double radio = 4.57;
+		double diametro = 2 * radio;
+		double longitud = 2 * Math.PI * radio;
+		double area = Math.PI * Math.pow(radio, 2);
+		
+		System.out.println("Radio = " + radio);
+		System.out.println();
+		System.out.println("Diametro de la circunferencia = " + diametro);
+		System.out.println("Perimetro de la circunferencia = " + longitud);
+		System.out.println("Area de la circunferencia = " + area);
+
+	}
+
+}

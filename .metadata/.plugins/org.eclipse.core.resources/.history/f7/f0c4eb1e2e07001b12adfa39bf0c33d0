@@ -1,0 +1,17 @@
+package org.ip.sesion01;
+
+public class EnteroAleatorio {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Vamos a generar un entero aleatorio entre -15 y 15");
+		
+		int N = 15;
+		int M = -15;
+		int enteroAleatorio = (int) Math.random()*(N - M + 1) + M;
+		
+		System.out.println("El entero generado aleatoriamente es: " + enteroAleatorio);
+
+	}
+
+}
