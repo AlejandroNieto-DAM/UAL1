@@ -12,7 +12,9 @@ public class OperacionAritmetica {
 			System.out.println("x = " + numero1 + ", y = " + numero2);
 			
 			System.out.print("La operacion elegida es: ");
-			String operacion = scanner.nextLine();
+			
+			//String operacion = scanner.nextLine();
+			String operacion = "/";
 			
 			System.out.println();
 			
