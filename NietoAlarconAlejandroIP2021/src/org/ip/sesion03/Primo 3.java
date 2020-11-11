@@ -17,7 +17,7 @@ public class Primo {
 		
 		raizNumero = (int) Math.sqrt(numero);
 		
-		for(int i = 1; i < raizNumero; i++) {
+		for(int i = 1; i <= raizNumero; i++) {
 			if(numero % i == 0) {
 				numeroVecesResto0++;
 			}
