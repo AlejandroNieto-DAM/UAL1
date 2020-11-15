@@ -14,29 +14,40 @@ public class BucleCentinela {
 		int totalNumeros = 0;
 		double mediaValores = 0.0;
 		
+		String valueCompleto = "";
 		
 		System.out.println("Introduce valores enteros, el programa termina si la entrada es 0");
 		
-		int value = 0;
+		cadenaDeValores = entrada.nextLine();
 		
 		
+		int contador = 0;
 		
-		while((value = entrada.nextInt()) != 0) {
+		int longitud = cadenaDeValores.indexOf("0");
 		
-
+		for(int i = 0; i < longitud; i++) {
+			String value = String.valueOf(cadenaDeValores.charAt(i));
+			
+			if(!value.equals(" ")){
+				valueCompleto += value;
+			}
+			
+			if(value.equals(" ")){
+				
 				totalNumeros++;
 				
-				if(value > 0) {
+				if(Integer.valueOf(valueCompleto) > 0) {
 					numerosPositivos ++;
-					sumaPositivos += value;
+					sumaPositivos += Integer.valueOf(valueCompleto);
 				} else {
 					numerosNegativos ++;
-					sumaNegativos += value;
+					sumaNegativos += Integer.valueOf(valueCompleto);
 				}
 				
-			
-		
-		}		
+				valueCompleto = "";
+			}
+		}
+				
 		
 		mediaValores = ((sumaPositivos + sumaNegativos) / Double.valueOf(totalNumeros));
 		
