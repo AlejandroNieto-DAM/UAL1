@@ -19,8 +19,8 @@ public class EcuacionSegundoGrado {
 			if (monstruo >= 0) {
 				
 				raiz = Math.sqrt(monstruo);
-				solucion1 = (-(b) + raiz) / 2 * a;
-				solucion2 = (-(b) - raiz) / 2 * a;
+				solucion1 = (-(b) + raiz) / (2 * a);
+				solucion2 = (-(b) - raiz) / (2 * a);
 				
 				System.out.println("SOLUCION DE LA ECUACION DE SEGUNDO GRADO");
 				System.out.println();
