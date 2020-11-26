@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class MatrizMagica {
 	
-	 
+	static Scanner entrada = new Scanner(System.in);
 	static int [][] matriz = new int [4][4];
 	
 	public static boolean esMatrizMagica(int [][] matriz) {
@@ -69,8 +69,6 @@ public class MatrizMagica {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Scanner entrada = new Scanner(System.in);
 		
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {

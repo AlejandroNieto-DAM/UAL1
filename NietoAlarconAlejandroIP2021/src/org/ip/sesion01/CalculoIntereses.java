@@ -23,8 +23,8 @@ public class CalculoIntereses {
 		System.out.println("*** Calculo de intereses ***");
 		System.out.println("Dinero ingresado: " + dinero);
 		System.out.println("Interes actual: " + INTERES);
-		System.out.println("Intereses a los " + meses + " meses: " + String.format("%.02f", intereses));
-		System.out.println("Retencion realizada: " + String.format("%.02f", retencion));
+		System.out.printf("Intereses a los %d meses: %2.2f", meses, intereses);
+		System.out.println("\nRetencion realizada: " + String.format("%.02f", retencion));
 		System.out.println("Intereses cobrados: " + String.format("%.02f", interesesCobrados));
 		
 		

@@ -14,7 +14,7 @@ public class Cilindro {
 			System.out.println("El area del cilindro es de: " + area);
 		} else if(opcion == 2) {
 			double volumen = Math.PI * Math.pow(radio, 2) * altura;
-			System.out.println("El volumen del cilindro es de: " + volumen);
+			System.out.println("El area del cilindro es de: " + volumen);
 		}
 	}
 

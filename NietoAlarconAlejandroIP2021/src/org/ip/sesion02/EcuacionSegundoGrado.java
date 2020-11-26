@@ -42,7 +42,7 @@ public class EcuacionSegundoGrado {
 				System.out.println("No tiene solucion real");
 			}
 			
-		} else {
+		} else if (a == 0){
 			System.out.println("No es una ecuacion de segundo grado");
 		}
 		

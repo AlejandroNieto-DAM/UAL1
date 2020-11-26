@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class DivisoresPrimos {
 
 	static int numero = 0;
+	static Scanner entrada = new Scanner(System.in);
 	
 	public static boolean esPrimo(int numero) {
 		// TODO Auto-generated method stub
@@ -35,7 +36,7 @@ public class DivisoresPrimos {
 		for(int i = 2; i <= numero; i++) {
 			if((numero % i) == 0) {
 				if(esPrimo(i)) {
-					System.out.print(" " + i);
+					System.out.print("  " + i);
 				}
 			}
 		}
@@ -44,12 +45,10 @@ public class DivisoresPrimos {
 	
 	public static void main(String[] args) {
 		
-		Scanner entrada = new Scanner(System.in);
 		System.out.print("Introduzca un numero: ");
-		numero = entrada.nextInt();		
+		numero = entrada.nextInt();
+		
 		divisoresPrimos(numero);
-		
-		
 	}
 
 }

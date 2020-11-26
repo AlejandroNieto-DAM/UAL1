@@ -1,6 +1,6 @@
 package org.ip.sesion05;
 
-public class PracticasConArrays {
+public class PracticarConArrays {
 
 	static int [] arrayEnteros = {5, 10, 15, 2, 4, 23, 7, 13, 8, 17, 27};
 	static int numeroDesplazamientos = 1;
