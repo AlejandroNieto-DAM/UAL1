@@ -172,6 +172,10 @@ public class ArrayList<E> extends AbstractList<E> {
   /** Ajusta la capacidad del array al tamaño de la lista */
   public void trimToSize() {
 	  
+	  if(this.CAPACIDAD_INICIAL == size) {
+		  throw new RuntimeException("Guapit@ no necesitas hacer un trim, el tamaño coincide con la capacidad");
+	  }
+	  
 	  E[] aux = (E[]) new Object[this.CAPACIDAD_INICIAL];
 	  
 	  int contador = 0;

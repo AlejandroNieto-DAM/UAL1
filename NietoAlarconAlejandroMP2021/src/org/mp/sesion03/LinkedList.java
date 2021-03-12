@@ -167,14 +167,15 @@ public class LinkedList<E> extends AbstractList<E> {
 		
 		Node<E> aux = head;
 		
-		String cadena = "[";
+		StringBuffer cadena = new StringBuffer("[");
 		
 		//System.out.println("cadena + " + cadena);
 		
 		while(aux != null) {
-			cadena += aux.element;
+			cadena.append(aux.element);
 			if(aux.next != null) {
-				cadena += ", ";
+				cadena.append(", ");
+				
 			}
 			
 			aux = (Node<E>) aux.next;
@@ -182,9 +183,9 @@ public class LinkedList<E> extends AbstractList<E> {
 
  		}
 		
-		cadena += "]";
+		cadena.append("]");
 				
-		return cadena;
+		return cadena.toString();
 	}
 
 	/** Elimina todos los elementos de la lista */
@@ -308,8 +309,8 @@ public class LinkedList<E> extends AbstractList<E> {
 	
 		@Override
 		public void remove() {
-			if(head != null) {
-				head = (Node<E>) head.next;
+			if(util != null) {
+				LinkedList.this.remove(util.element);
 			}
 		}
 	}

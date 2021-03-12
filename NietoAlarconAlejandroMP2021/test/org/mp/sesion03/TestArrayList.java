@@ -13,7 +13,7 @@ import org.junit.Test;
 public class TestArrayList {
 
 	private ArrayList<String> lista1 = new ArrayList<String>();
-	private Integer[] enteros = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }; // autoboxing
+	private Integer[] enteros = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}; // autoboxing
 	private ArrayList<Integer> lista2 = new ArrayList<Integer>(enteros);
 
 
@@ -28,13 +28,12 @@ public class TestArrayList {
 	}
 
 	@Test
-	public void testAddE() {assertEquals(0, lista1.size);
+	public void testAddE() {
+		assertEquals(0, lista1.size);
 		lista1.add("Juan");
 		assertEquals(1, lista1.size);
 		assertEquals(lista1.toString(), "[Juan]");
-		
 		lista2.add(25);
-		System.out.println("Lista size tes t " + lista2.size);
 		assertEquals(17, lista2.size);
 		assertEquals(lista2.toString(), "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 25]");
 	}
@@ -62,7 +61,6 @@ public class TestArrayList {
 
 	@Test
 	public void testClear() {
-		
 		lista1.clear();
 		assertEquals(0, lista1.size);
 		assertEquals(lista1.toString(), "[]");
@@ -73,14 +71,6 @@ public class TestArrayList {
 
 	@Test
 	public void testContains() {
-		boolean finded = false;
-		  for(int i = 0;  i < lista2.size && finded == false; i++) {
-			  if(lista2.get(i).equals(7)) {
-				  
-				  finded = true;
-			  }
-			  System.out.println(lista2.get(i) + " " + lista2.get(i).equals(7));
-		 }
 		assertTrue(lista2.contains(7));
 		assertFalse(lista1.contains("Juan"));
 	}
@@ -117,7 +107,7 @@ public class TestArrayList {
 	}
 
 	@Test
-	public void testIndexOf() {		
+	public void testIndexOf() {
 		assertEquals(-1, lista1.indexOf("Jacinto"));
 		assertEquals(-1, lista2.indexOf(978));
 		lista1.add("Ana");
@@ -132,7 +122,6 @@ public class TestArrayList {
 		lista1.add("Ana");
 		lista1.add("Ana");
 		assertEquals(1, lista1.lastIndexOf("Ana"));
-		
 		lista2.add(7);
 		lista2.add(7);
 		lista2.add(7);
@@ -147,9 +136,9 @@ public class TestArrayList {
 		int index = 0;
 
 		try {
-			
 			string = lista1.remove(index);
 			fail("Debería haber lanzado una excepción");
+
 		} catch (IndexOutOfBoundsException e) {
 			assertEquals(e.getMessage(), "Indice: " + index + ", Tamaño: " + lista1.size);
 		}
@@ -202,6 +191,12 @@ public class TestArrayList {
 
 	@Test
 	public void testTrimToSize() {
+		try {
+			lista2.trimToSize();
+			fail("Debería haber lanzado una excepción");
+		} catch (RuntimeException e1) {
+			assertEquals(e1.getMessage(),"Guapit@ no necesitas hacer un trim, el tamaño coincide con la capacidad");
+		}
 		assertEquals(16, lista2.size);
 		System.out.print(
 				"Antes de invocar al método trimToSize, la capacidad es igual al tamaño => " + lista2.size + "\n");
@@ -246,7 +241,7 @@ public class TestArrayList {
 
 		assertTrue(iteradorEnteros.hasNext());
 		assertFalse(iteradorString.hasNext());
-
+		
 		try {
 			iteradorString.next();
 			fail("Debería haber lanzado una excepción");
@@ -254,8 +249,6 @@ public class TestArrayList {
 			assertEquals(e.getMessage(), "No hay más elementos en la lista");
 
 		}
-		
-
 
 		lista1.add("Ana");
 		lista1.add("Juan");
@@ -263,21 +256,15 @@ public class TestArrayList {
 		assertEquals("Ana", iteradorString.next());
 		assertEquals("Juan", iteradorString.next());
 
-
 		iteradorEnteros.remove();
 		assertEquals(new Integer(4), lista2.get(2));
 		int index = 2;
-		
-		System.out.println("Antes del try");
 		try {
 			iteradorString.remove();
 			fail("Debería haber lanzado una excepción");
 		} catch (IndexOutOfBoundsException e) {
 			assertEquals(e.getMessage(), "Indice: " + index + ", Tamaño: " + lista1.size);
 		}
-		
-		System.out.println("HOliwi");
-
 
 	}
 
