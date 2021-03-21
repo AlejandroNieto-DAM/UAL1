@@ -1,0 +1,26 @@
+package org.mp.sesion02;
+
+
+public class Busqueda {
+
+	public static <E> int busquedaBinaria(E[] object, E object2) throws ExcepcionArrayVacio{
+		if(object.length == 0) {
+			throw new ExcepcionArrayVacio("Array vacío");
+		}
+		
+		int position = -1;
+		
+		for(int i = 0;  i < object.length; i++) {
+			System.out.println(object[i] + " " + object2);
+			if(object[i].equals(object2)) {
+				position = i;
+			}
+		}
+		
+		return position;
+
+
+	}
+
+	
+}

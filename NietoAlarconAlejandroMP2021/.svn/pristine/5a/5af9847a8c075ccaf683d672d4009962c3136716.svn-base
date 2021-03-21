@@ -1,0 +1,331 @@
+package org.mp.sesion03;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class LinkedList<E> extends AbstractList<E> {
+
+	//Propiedades
+
+	private Node<E> head;
+	private Node<E> tail;
+
+	/** Crea una lista enlazada por defecto */
+	public LinkedList() {
+	}
+
+	/** Crea una lista enlazada a partir de un array de objetos */
+	public LinkedList(E[] objects) {
+		for (int i = 0; i < objects.length; i++)
+			add(objects[i]); // Advertencia: no usar super(objects)!
+	}
+
+	/** Devuelve el primer elemento de la lista */
+	public E getFirst() {
+		if(head == null) {
+			return null;
+		}
+		return head.element;
+	}
+
+	/** Devuelve el último elemento de la lista */
+	public E getLast() {
+		if(tail == null) {
+			return null;
+		}
+		return tail.element;
+	}
+
+	public void addFirst(E e) {
+		Node<E> nuevoNodo = new Node<E>(e); // Crea un nodo
+		nuevoNodo.next = head; // enlaza el nuevoNodo con la cabeza
+		head = nuevoNodo; //la cabeza apunta al nuevoNodo
+		size++; // Incrementa el tamaño de la lista
+
+		if (tail == null) // si la lista está vacía
+			tail = head;  // el nuevo nodo es el único en la lista
+	}
+
+	/** Añade un elemento al final de la lista */
+	public void addLast(E e) {
+		Node<E> nuevoNodo = new Node<E>(e); // Crea un nodo para e e
+
+		if (tail == null) {
+			head = tail = nuevoNodo; // El nodo nuevo es el único de la lista
+		} else {
+			
+			tail.next = nuevoNodo;
+			tail = (Node<E>) tail.next; // la cola apunta ahora al último nodo
+		}
+
+		size++; // Incrementa el tamaño
+	}
+
+	/**
+	 * Añade el elemento e en la posición index. La posición del elemento
+	 * head es 0
+	 */
+	
+	public void add(int index, E e) {
+		if (index <= 0) { // Inserta al principio
+			addFirst(e);
+		} else if (index >= size) { // Inserta al final
+			addLast(e);
+		} else { // Inserta en medio
+			Node<E> current = (Node<E>) head;
+			
+			for (int i = 1; i < index; i++) {
+				current = (Node<E>) current.next;   // Situo current
+			}
+			
+			Node<E> temp = (Node<E>) current.next;   //Situo temp
+			current.next = new Node<E>(e); // Inserto elnuevo nodo
+			
+			((Node<E>) (current.next)).next = temp;
+			size++; // incrementa el tamaño
+		}
+	}
+
+	/**
+	 * Elimina el primer elemento de la lista y devuelve el elemento
+	 * eliminado.
+	 */
+	public E removeFirst() {
+		if (size == 0) { //Nada que borrar
+			return null;
+		} else {
+			Node<E> temp = (Node<E>) head; // conserva el primer nodo temporalmente
+			head = (Node<E>) head.next; //mueve head para apuntar al siguiente nodo
+			size--; // disminuye el tamaño
+			if (head == null) {
+				tail = null;  //la lista se pone vacía
+			}
+			return temp.element; //devuelve el elemento borrado
+		}
+	}
+
+	/**
+	 * Elimina el último elemento de la lista y devuelve el elemento
+	 * eliminado.
+	 */
+	public E removeLast() {
+		if (size == 0) { // Nada que eliminar
+			return null;
+		} else if (size == 1) { // solo un elemento en la lista
+			Node<E> temp = head;
+			head = tail = null; // la lista la hacemos vacía
+			size = 0;
+			return temp.element;
+		} else {
+			Node<E> current = head;
+
+			for (int i = 0; i < size - 2; i++) {
+				current = (Node<E>) current.next;
+			}
+
+			Node<E> temp = tail;
+			tail = current;
+			tail.next = null;
+			size--;
+			return temp.element;
+		}
+	}
+
+	/**
+	 * Elimina el elemento en la posición index. Devuelve el
+	 * elemento que fué eliminado de la lista.
+	 */
+	public E remove(int index) {
+		if (index < 0 || index >= size) { // Fuera de rango
+			return null;
+		} else if (index == 0) { // Elimina el primero
+			return removeFirst();
+		} else if (index == size - 1) { // Elimina el último
+			return removeLast();
+		} else {
+			Node<E> previous = head;
+
+			for (int i = 1; i < index; i++) {
+				previous = (Node<E>) previous.next;
+			}
+
+			Node<E> current = (Node<E>) previous.next;
+			previous.next = current.next;
+			size--;
+			return current.element;
+		}
+	}
+
+	
+	@Override /** Sobre-escribe toString() */
+	public String toString() {
+		//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+		if(head == null) {
+			return "[]";
+		}
+		
+		Node<E> aux = head;
+		
+		StringBuffer cadena = new StringBuffer("[");
+		
+		//System.out.println("cadena + " + cadena);
+		
+		while(aux != null) {
+			cadena.append(aux.element);
+			if(aux.next != null) {
+				cadena.append(", ");
+				
+			}
+			
+			aux = (Node<E>) aux.next;
+			//System.out.println("auxnext + " + aux);
+
+ 		}
+		
+		cadena.append("]");
+				
+		return cadena.toString();
+	}
+
+	/** Elimina todos los elementos de la lista */
+	public void clear() {
+		head = null;
+		tail = null;
+		size = 0;
+		
+	}
+
+	/** Devuelve true si la lista contiene el elemento e */
+	public boolean contains(E e) {
+		Node<E> current = head;
+		boolean finded = false;
+		while(current != null) {
+			if(current.element.equals(e)) {
+				finded = true;
+			}
+			
+			current = (Node<E>) current.next;
+		}
+		return finded;
+	}
+
+	/**Devuelve el elemento en la posición index especificada  */
+	public E get(int index) {
+
+		return null;
+	}
+
+	/**
+	 * Devuelve el índice de la primera ocurrencia del elemento en la lista.
+	 * Devuelve -1 si no está
+	 */
+	public int indexOf(E e) {
+		Node<E> current = head;
+		boolean finded = false;
+		int position = -1;
+		int index = 0;
+		while(current != null) {
+			if(current.element.equals(e) && finded == false) {
+				finded = true;
+				position = index;
+			}
+			index++;
+			current = (Node<E>) current.next;
+		}
+		return position;
+	}
+
+	/**
+	 * Devuelve el índice de la última ocurrencia del elemento
+	 * en la lista. Devuelve -1 si no está.
+	 */
+	public int lastIndexOf(E e) {
+		Node<E> current = head;
+		boolean finded = false;
+		int position = -1;
+		int index = 0;
+		while(current != null) {
+			if(current.element.equals(e)) {
+				finded = true;
+				position = index;
+			}
+			index++;
+			current = (Node<E>) current.next;
+		}
+		return position;
+	}
+
+	/**
+	 * Sustituye el elemento de la posición especificada
+	 * en la lista por el elemento especificado.
+	 */
+	public E set(int index, E e) {
+		
+		if(index < 0 || index >= size) {
+			return null;
+		}
+		
+		Node<E> current = head;
+		for(int i = 0; i < index; i++) {
+			current = (Node<E>) current.next;
+		}
+		
+		E aux = current.element;
+		current.element = e;
+		
+		return aux;
+	}
+
+	@Override
+	/** Sobre-escribe el método iterator() definido en Iterable */
+	public Iterator<E> iterator() {
+		return new LinkedListIterator();
+		// Devuelve una instancia de LinkedListIterator
+	}
+
+	/** Esta clase implementa la interface Iterator*/
+	private class LinkedListIterator implements Iterator<E> {
+
+		private Node<E> util = head;
+	  	
+		@Override
+		public boolean hasNext() {
+			return util != null;
+		}
+	
+		@SuppressWarnings("unchecked")
+		@Override
+		public E next() {
+			if(util == null) {
+				throw new NoSuchElementException("No hay más elementos en la lista");
+			}
+			
+			E aux = util.element;
+			util = (Node<E>) util.next;
+			
+			return aux;
+		}
+	
+		@Override
+		public void remove() {
+			if(util != null) {
+				LinkedList.this.remove(util.element);
+			}
+		}
+	}
+
+	// Esta clase solo se usa en LinkedList, por eso es private.
+	// Esta clase no necesita acceder a ningún miembro de instancia de LinkedList,
+	// por lo que se define estática.
+
+	private static class Node<E> {
+		// Propiedades
+
+		E element;
+		public Object next;
+
+		public Node(E element) {
+			this.element = element;
+		}
+	}
+}
