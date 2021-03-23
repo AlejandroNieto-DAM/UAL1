@@ -1,20 +1,102 @@
-#intall.packages('e1071')
-library(e1071)
-library(mlbench)
-
-data(HouseVotes84, package = "mlbench")
-model <- naiveBayes(Class ~ ., data = HouseVotes84)
-predict(model, HouseVotes84[1:10,])
-predict(model, HouseVotes84[1:10,], type = "raw")
-
 # Cargamos el CSV con la función que nos da R para meterlo en una variable Dataframe
 notas <- read.csv(file = '/Users/alejandronietoalarcon/Documents/UAL1/R_Exercises/notas.csv', sep=";", dec=",")
 
-# Mostramos el dataframe por completo
-notas
 
+## **************** EJERCICIO 1 ******************
+# Ponemos a 0 todos los Nan a 0 como dice el enunciado para saber que es un suspenso.
+notas[is.na(notas)] <- 0
+
+#Cambiamos todas las variables cuantitativas a cualitativas con valores de Aprobado = A o Suspenso = S
+notas$Practica1[notas$Practica1 >= '0.5'] <- 'A'
+notas$Practica1[notas$Practica1 < '0.5'] <- 'S'
+
+notas$Practica2[notas$Practica2 >= '0.5'] <- 'A'
+notas$Practica2[notas$Practica2 < '0.5'] <- 'S'
+
+notas$Practica3[notas$Practica3 >= '0.5'] <- 'A'
+notas$Practica3[notas$Practica3 < '0.5'] <- 'S'
+
+notas$TotalPracticas[notas$TotalPracticas >= '1'] <- 'A'
+notas$TotalPracticas[notas$TotalPracticas < '1'] <- 'S'
+
+notas$EvaluacionParcial[notas$EvaluacionParcial >= '1'] <- 'A'
+notas$EvaluacionParcial[notas$EvaluacionParcial < '1'] <- 'S'
+
+notas$ExamenJunio[notas$ExamenJunio >= '3'] <- 'A'
+notas$ExamenJunio[notas$ExamenJunio < '3'] <- 'S'
+
+notas$NotaFinalJunio[notas$NotaFinalJunio >= '5'] <- 'A'
+notas$NotaFinalJunio[notas$NotaFinalJunio < '5'] <- 'S'
+
+notas$ExamenSeptiembre[notas$ExamenSeptiembre >= '4'] <- 'A'
+notas$ExamenSeptiembre[notas$ExamenSeptiembre < '4'] <- 'S'
+
+notas$NotaFinalSeptiembre[notas$NotaFinalSeptiembre >= '5'] <- 'A'
+notas$NotaFinalSeptiembre[notas$NotaFinalSeptiembre < '5'] <- 'S'
+
+
+## **************** EJERCICIO 2 ******************
+# Creo mi modelo NaiveBayes para predecir aprobar la asignatura en Junio.
 model <- naiveBayes(NotaFinalJunio ~ ., data = notas)
 
-predict(model, notas[1:10], type = "raw")
+# Dado el suceso de aprobar el examen de Junio
+notas$Predicted <- predict(model, notas)
+tabla <- table(notas[, c('NotaFinalJunio', 'Predicted')])
+tabla
+
+prop.table(tabla, 1)
+## La probabilidad de que acierte en la prediccion de aprobado dado que el/la alumno/a ha aprobado. 0.83333333
+## La probabilidad de que acierte en la prediccion de suspenso dado que el/la alumno/a ha suspendido. 0.98230088
+
+prop.table(tabla, 2)
+## La probabilidad de que el/la alumno/a aprueba dado que el clasificador predice que va a aprobar. 0.93750000
+## La probabilidad de que el/la alumno/a suspenda dado que el clasificador predice que va a suspender. 0.94871795
+
+## La probabilidad de que el clasificador acierte en su prediccion.
+## Es la suma de los aciertos entre todos.
+(30+111)/(30+6+2+111)
 
 
+## **************** EJERCICIO 3 ******************
+# A) Dado el suceso ser del Grupo A
+dfGrupos <- notas[c('Grupo', 'NotaFinalJunio')]
+modelGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGrupos)
+dfGrupos$PredictPorGrupo <- predict(modelGrupo, dfGrupos)
+tabla1 <- table(dfGrupos[, c('NotaFinalJunio', 'PredictPorGrupo')])
+prop.table(tabla1, 1)
+prop.table(tabla1, 2)
+
+# B) Utilizando informacion de grupo, de Practica 1 y de Practica 2.
+dfGruposPracticas <- notas[c('Grupo', 'Practica1', 'Practica2', 'NotaFinalJunio')]
+modelPracticasGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGruposPracticas)
+dfGruposPracticas$PredictPorPracticasGrupo <- predict(modelPracticasGrupo, dfGruposPracticas)
+tabla2 <- table(dfGruposPracticas[, c('NotaFinalJunio', 'PredictPorPracticasGrupo')])
+prop.table(tabla2, 1)
+prop.table(tabla2, 2)
+
+# C) Utilizando informacion de grupo, de Practica 1, de Practica 2 y de Evaluacion parcial.
+dfGruposPracticasEvaluacion <- notas[c('Grupo', 'Practica1', 'Practica2', 'EvaluacionParcial', 'NotaFinalJunio')]
+modelPracticasGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGruposPracticasEvaluacion)
+dfGruposPracticasEvaluacion$PredictPorPracticasGrupo <- predict(modelPracticasGrupo, dfGruposPracticasEvaluacion)
+tabla3 <- table(dfGruposPracticasEvaluacion[, c('NotaFinalJunio', 'PredictPorPracticasGrupo')])
+prop.table(tabla3, 1)
+prop.table(tabla3, 2)
+
+# D) Utilizando toda la informacioon disponible de grupo, practicas y evaluacion parcial.
+dfGruposPracticasEvaluacionT <- notas[c('Grupo', 'Practica1', 'Practica2', 'Practica3', 'TotalPracticas', 'EvaluacionParcial', 'NotaFinalJunio')]
+modelPracticasGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGruposPracticasEvaluacionT)
+dfGruposPracticasEvaluacionT$PredictPorPracticasGrupo <- predict(modelPracticasGrupo, dfGruposPracticasEvaluacionT)
+tabla4 <- table(dfGruposPracticasEvaluacionT[, c('NotaFinalJunio', 'PredictPorPracticasGrupo')])
+prop.table(tabla4, 1)
+prop.table(tabla4, 2)
+
+
+## **************** EJERCICIO 4 ******************
+## Calcula la prediccion de Aprobar en Junio para cada uno de los miembros del grupo
+## en base a las notas que creeis que obtendreis en las practicas 1 y 2.
+modelNotasPracticas <- naiveBayes(NotaFinalJunio ~ ., data = notas[c('Practica1', 'Practica2', 'NotaFinalJunio')])
+nuestrasNotas <- data.frame (Practica1  = c('S', 'A', 'A', 'A', 'A'),
+                             Practica2 = c('A', 'S', 'S', 'A', 'S'),
+                             Nombre = c('Alejandro M', 'Alejandro N', 'Nicolas Garcia', 'Jesus David Martinez', 'David Casado'))
+nuestrasNotas$Predicted <- predict(modelNotasPracticas, nuestrasNotas)
+nuestrasNotas
