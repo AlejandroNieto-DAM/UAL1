@@ -1,9 +1,0 @@
-package org.mp.sesion02;
-
-public abstract class MatrizGenerica {
-
-	public <E> E sumar(E object, E object2){
-		return null;
-	}
-
-}
