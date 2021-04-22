@@ -1,0 +1,130 @@
+package org.mp.sesion06;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class ConjuntoDatos {
+	
+	private File archivoTexto;
+	private String separador;
+	private Locale locale;
+	private List<String> cabecera;
+	private int numeroLineas;
+	private int numeroColumnas;
+	private double[][] datos;
+
+	public ConjuntoDatos(File archivoTexto, String separador, Locale locale) {
+			this.archivoTexto = archivoTexto;
+			this.separador = separador;
+			this.locale = locale;
+			this.cabecera = cabecera(archivoTexto);
+			this.numeroLineas = numLineas(archivoTexto);
+			this.numeroColumnas = numColumnas(archivoTexto);
+			this.datos = leerDatos(archivoTexto, this.numeroLineas, this.numeroColumnas);
+			
+	}
+
+	private List cabecera(File archivoTexto) {
+		List<String> list = new ArrayList();
+		
+		Scanner sc;
+		try {
+			sc = new Scanner(archivoTexto);
+			
+			String s = sc.nextLine();
+			
+			String[] tokens = s.split(separador);
+			
+			for(int i = 0; i < tokens.length; i++) {
+				list.add(tokens[i]);
+			}
+			
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	private int numLineas(File archivoTexto) {
+		int numeroLineas = 0;
+		Scanner sc;
+		try {
+			sc = new Scanner(archivoTexto);
+			sc.nextLine();
+			while(sc.hasNextLine()) {
+				numeroLineas++;
+				sc.nextLine();
+			}
+			
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return numeroLineas;
+				
+	}
+
+	private int numColumnas(File archivoTexto) {
+		return cabecera(archivoTexto).size();
+	}
+
+	private double[][] leerDatos(File archivoTexto, int filas, int columnas) {
+
+	}
+
+	public double[] getColumna(int columna) {
+
+	}
+
+	public double[] getColumna(String columna) {
+
+	}
+
+	public File getArchivoTexto() {
+		return archivoTexto;
+	}
+
+	public String getSeparador() {
+		return separador;
+	}
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public List getCabecera() {
+		return cabecera;
+	}
+
+	public int getNumeroLineas() {
+		return numeroLineas;
+	}
+
+	public int getNumeroColumnas() {
+		return numeroColumnas;
+	}
+
+	public double[][] getDatos() {
+		return datos;
+	}
+
+	public void exportar(String[] cabecera, String archivoTexto, String separador) {
+
+	}
+
+	public ConjuntoDatos conjuntoDatos(String[] cabecera, String archivoTexto, String separador, Locale locale) {
+
+	}
+
+}

@@ -1,6 +1,5 @@
 # Cargamos el CSV con la funci√≥n que nos da R para meterlo en una variable Dataframe
-notas <- read.csv(file = '/Users/alejandronietoalarcon/Documents/UAL1/R_Exercises/notas.csv', sep=";", dec=",")
-
+notas <- read.csv(file = 'notas.csv', sep=";", dec=",")
 
 ## **************** EJERCICIO 1 ******************
 # Ponemos a 0 todos los Nan a 0 como dice el enunciado para saber que es un suspenso.
@@ -37,6 +36,8 @@ notas$NotaFinalSeptiembre[notas$NotaFinalSeptiembre < '5'] <- 'S'
 
 ## **************** EJERCICIO 2 ******************
 # Creo mi modelo NaiveBayes para predecir aprobar la asignatura en Junio.
+# Para instalar el modelo NaiveBayes install.packages("e1071")
+library(e1071)
 model <- naiveBayes(NotaFinalJunio ~ ., data = notas)
 
 # Dado el suceso de aprobar el examen de Junio
@@ -44,17 +45,25 @@ notas$Predicted <- predict(model, notas)
 tabla <- table(notas[, c('NotaFinalJunio', 'Predicted')])
 tabla
 
+
 prop.table(tabla, 1)
 ## La probabilidad de que acierte en la prediccion de aprobado dado que el/la alumno/a ha aprobado. 0.83333333
 ## La probabilidad de que acierte en la prediccion de suspenso dado que el/la alumno/a ha suspendido. 0.98230088
+
+pie(prop.table(tabla, 1)[1,], labels=c("Aprobado", "Suspenso"), main = " La probabilidad de que acierte en la prediccion \n 
+    de aprobado dado que el/la alumno/a ha aprobado", col=c("#23D800", "red"))
 
 prop.table(tabla, 2)
 ## La probabilidad de que el/la alumno/a aprueba dado que el clasificador predice que va a aprobar. 0.93750000
 ## La probabilidad de que el/la alumno/a suspenda dado que el clasificador predice que va a suspender. 0.94871795
 
+pie(prop.table(tabla, 2)[1,], labels=c("Aprobado", "Suspenso"), main = "La probabilidad de que el/la alumno/a aprueba dado \n
+    que el clasificador predice que va a aprobar.", col=c("#23D800", "red"))
+
 ## La probabilidad de que el clasificador acierte en su prediccion.
 ## Es la suma de los aciertos entre todos.
 (30+111)/(30+6+2+111)
+
 
 
 ## **************** EJERCICIO 3 ******************
@@ -66,6 +75,9 @@ tabla1 <- table(dfGrupos[, c('NotaFinalJunio', 'PredictPorGrupo')])
 prop.table(tabla1, 1)
 prop.table(tabla1, 2)
 
+barplot(tabla1, beside = T, xlab = "APROBADOS/SUSPENSOS", main="PredicciÛn en base a su grupo", col=c(rgb(0, 0.848, 1), rgb(0.94, 0.51, 0)))
+
+
 # B) Utilizando informacion de grupo, de Practica 1 y de Practica 2.
 dfGruposPracticas <- notas[c('Grupo', 'Practica1', 'Practica2', 'NotaFinalJunio')]
 modelPracticasGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGruposPracticas)
@@ -73,6 +85,8 @@ dfGruposPracticas$PredictPorPracticasGrupo <- predict(modelPracticasGrupo, dfGru
 tabla2 <- table(dfGruposPracticas[, c('NotaFinalJunio', 'PredictPorPracticasGrupo')])
 prop.table(tabla2, 1)
 prop.table(tabla2, 2)
+
+barplot(tabla2, beside = T, xlab = "APROBADOS/SUSPENSOS", main="PredicciÛn en base a su grupo y las notas de las pr·cticas 1 y 2", col=c(rgb(0, 0.848, 1), rgb(0.94, 0.51, 0)))
 
 # C) Utilizando informacion de grupo, de Practica 1, de Practica 2 y de Evaluacion parcial.
 dfGruposPracticasEvaluacion <- notas[c('Grupo', 'Practica1', 'Practica2', 'EvaluacionParcial', 'NotaFinalJunio')]
@@ -82,6 +96,9 @@ tabla3 <- table(dfGruposPracticasEvaluacion[, c('NotaFinalJunio', 'PredictPorPra
 prop.table(tabla3, 1)
 prop.table(tabla3, 2)
 
+barplot(tabla3, beside = T, xlab = "APROBADOS/SUSPENSOS", main="PredicciÛn en base a su grupo y las notas de las pr·cticas 1, 2 y Èxamen parcial", col=c(rgb(0, 0.848, 1), rgb(0.94, 0.51, 0)))
+
+
 # D) Utilizando toda la informacioon disponible de grupo, practicas y evaluacion parcial.
 dfGruposPracticasEvaluacionT <- notas[c('Grupo', 'Practica1', 'Practica2', 'Practica3', 'TotalPracticas', 'EvaluacionParcial', 'NotaFinalJunio')]
 modelPracticasGrupo <- naiveBayes(NotaFinalJunio ~ ., data = dfGruposPracticasEvaluacionT)
@@ -89,6 +106,9 @@ dfGruposPracticasEvaluacionT$PredictPorPracticasGrupo <- predict(modelPracticasG
 tabla4 <- table(dfGruposPracticasEvaluacionT[, c('NotaFinalJunio', 'PredictPorPracticasGrupo')])
 prop.table(tabla4, 1)
 prop.table(tabla4, 2)
+
+tabla4
+barplot(tabla4, beside = T, xlab = "APROBADOS/SUSPENSOS", main="PredicciÛn en base toda la informacioon disponible de grupo, practicas y evaluacion parcial", col=c(rgb(0, 0.848, 1), rgb(0.94, 0.51, 0)))
 
 
 ## **************** EJERCICIO 4 ******************
@@ -100,3 +120,4 @@ nuestrasNotas <- data.frame (Practica1  = c('S', 'A', 'A', 'A', 'A'),
                              Nombre = c('Alejandro M', 'Alejandro N', 'Nicolas Garcia', 'Jesus David Martinez', 'David Casado'))
 nuestrasNotas$Predicted <- predict(modelNotasPracticas, nuestrasNotas)
 nuestrasNotas
+
