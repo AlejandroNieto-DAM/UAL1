@@ -1,0 +1,24 @@
+package org.mp.sesion07;
+
+public class ImagenDAO {
+
+	public static Imagen leerArchivo(String cabeceraI) {
+		
+		return null;
+	}
+	
+	private static imagen leerBSQ(String nombreArchivo, Imagen imagen, String[] nbandas, String tipoImagen) {
+		
+	}
+
+	public static void escribirArchivo(String salida, Imagen imagenNueva) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static void escribirBSQ(String salida, Imagen imagenNueva) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

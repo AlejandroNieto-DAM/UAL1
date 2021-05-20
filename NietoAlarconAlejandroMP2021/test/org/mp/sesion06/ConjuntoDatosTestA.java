@@ -61,6 +61,7 @@ public class ConjuntoDatosTestA {
 		ArrayList cabecera = (ArrayList) cd.getCabecera();
 		
 		assertTrue(cabecera.size()==3);
+
 		assertTrue(cabecera.get(0).equals("A"));
 		assertTrue(cabecera.get(1).equals("B"));
 		assertTrue(cabecera.get(2).equals("C"));
