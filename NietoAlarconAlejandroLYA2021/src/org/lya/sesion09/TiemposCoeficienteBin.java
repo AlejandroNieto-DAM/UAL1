@@ -6,12 +6,13 @@ public class TiemposCoeficienteBin {
 	
 	public static void main(String[] args) {
 		
-		int n = 4;
+		int n = 16;
 		
-		while (n <= 25) {
+		while (n <= 8192) {
 			
 			CoeficienteBin coeficiente = new CoeficienteBin(n * 2, n);
 			
+			/*
 			double[] tiemposR = new double[10];
 			
 			for(int i = 0; i < 10; i++) {
@@ -23,19 +24,19 @@ public class TiemposCoeficienteBin {
 			
 			System.out.println("Tiempo que tarda el RECURSIVO con (" + n * 2  + ", " + n + " )  es igual a: " + calcularMedia(tiemposR));
 			
-			
+			*/
 			double[] tiemposD = new double[10];
 			
 			for(int i = 0; i < 10; i++) {
 				long startTime = System.nanoTime();
-				coeficiente.coefBinomialRecursivo();
+				coeficiente.coefBinomialProgDinam();
 				long endTime = System.nanoTime();
 				tiemposD[i] =  (double)endTime - startTime;
 			}
 			
 			System.out.println("Tiempo que tarda el DINAMICO con (" + n * 2  + ", " + n + " )  es igual a: " + calcularMedia(tiemposD));
 			
-			n += 1; 
+			n *= 2; 
 			
 		}
 	}
